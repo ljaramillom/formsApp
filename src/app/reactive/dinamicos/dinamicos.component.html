@@ -1,0 +1,51 @@
+<h2>Reactivos: <small> Dinámicos </small></h2>
+<hr>
+
+<form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="miFormulario">
+    <!-- nombre de usuario -->
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Nombre</label>
+        <div class="col-sm-9">
+            <input class="form-control" placeholder="Nombre del usuario" formControlName="nombre">
+            <span class="form-text text-danger" *ngIf="validarCampo('nombre')">*Campo obligatorio</span>
+        </div>
+    </div>
+
+    <!-- agregar favorito -->
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Agregar</label>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input class="form-control" placeholder="Agregar favorito" [formControl]="nuevoArtista" (keyup.enter)="agregarFavorito()">
+                <button class="btn btn-outline-primary" type="button" (click)="agregarFavorito()">Agregar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- lista de artistas favoritos -->
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Favoritos</label>
+        <div class="col-sm-9" formArrayName="favoritos">
+            <div class="input-group mb-1" *ngFor="let artista of favoritosArr.controls; let i = index">
+                <input class="form-control mb-1" [formControlName]="i">
+                <button class="btn btn-outline-danger" type="button" (click)="eliminar(i)"><strong>X</strong></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-primary float-end">Guardar</button>
+        </div>
+    </div>
+</form>
+
+<span>Valid</span>
+<pre>{{ miFormulario.valid }}</pre>
+<br>
+<span>Value</span>
+<pre>{{ miFormulario.value | json }}</pre>
+<br>
+<span>Agregar favorito</span>
+<pre>{{ nuevoArtista.valid }}</pre>
+<pre>{{ nuevoArtista.value }}</pre>
